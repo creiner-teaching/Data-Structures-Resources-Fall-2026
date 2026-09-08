@@ -1,10 +1,10 @@
 #include <iostream>
 #include <stdexcept>
-#include "safe_array.h"
+#include "ArrayList.h"
 using namespace std;
 
 int main() {
-    safe_array a(4);
+    ArrayList a(4);
     cout << "array: " << a << endl;
     a.add(7);
     a.add(-2);

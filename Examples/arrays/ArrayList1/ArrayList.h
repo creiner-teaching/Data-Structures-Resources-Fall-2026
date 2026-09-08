@@ -1,14 +1,14 @@
 using namespace std;
 
-class safe_array {
+class ArrayList {
 private:
     int *data;
     int capacity;
     int current_size;
 
 public:
-    safe_array(int size);
-    ~safe_array();
+    ArrayList(int size);
+    ~ArrayList();
 
     int size();
     int cap();
@@ -18,5 +18,5 @@ public:
     void add(int value);
 };
 
-ostream& operator<<(ostream& out, safe_array& a);
+ostream& operator<<(ostream& out, ArrayList& a);
 

@@ -1,19 +1,20 @@
+#include <iostream>
+
 using namespace std;
 
-class dynamic_array {
+class DynamicArray {
 private:
-    int *data;
+    int* data;
     int capacity;
     int current_size;
 
     void grow_capacity();
 
 public:
-    dynamic_array(int size);
-    ~dynamic_array();
+    DynamicArray(int size);
+    ~DynamicArray();
 
     int size();
-    int cap();
 
     int& at(int index);
     int& operator[](int index);
@@ -26,5 +27,5 @@ public:
     bool remove_value(int value); // removes first instance of value
 };
 
-ostream& operator<<(ostream& out, dynamic_array& a);
+ostream& operator<<(ostream& out, DynamicArray& a);
 

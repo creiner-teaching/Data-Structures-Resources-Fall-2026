@@ -1,9 +1,9 @@
 #include <iostream>
 #include <stdexcept>
-#include "dynamic_array.h"
+#include "DynamicArray.h"
 using namespace std;
 
-dynamic_array::dynamic_array(int size) {
+DynamicArray::DynamicArray(int size) {
     if (size <= 0) {
         throw invalid_argument("size must be at least 1");
     }
@@ -13,39 +13,35 @@ dynamic_array::dynamic_array(int size) {
     current_size = 0;
 }
 
-dynamic_array::~dynamic_array() {
+DynamicArray::~DynamicArray() {
     delete[] data;
 }
 
-int dynamic_array::size() {
+int DynamicArray::size() {
     return current_size;
 }
 
-int dynamic_array::cap() {
-    return capacity;
-}
-
-int& dynamic_array::at(int index) {
+int& DynamicArray::at(int index) {
     if (index < 0 or index >= current_size) {
         throw out_of_range("invalid index");
     }
     return data[index];
 }
 
-int& dynamic_array::operator[](int index) {
+int& DynamicArray::operator[](int index) {
     return at(index);
 }
 
-int dynamic_array::find(int value) {
+int DynamicArray::find(int value) {
     for (int i = 0; i < current_size; i++) {
         if (data[i] == value) {
             return i;
         }
     }
-    return -1;
+    throw domain_error("no matching value found");
 }
 
-void dynamic_array::grow_capacity() {
+void DynamicArray::grow_capacity() {
     // keep a pointer to the original array
     int *old = data;
 
@@ -62,7 +58,7 @@ void dynamic_array::grow_capacity() {
     delete[] old;
 }
 
-void dynamic_array::insert(int index, int value) {
+void DynamicArray::insert(int index, int value) {
     if (current_size == capacity) {
         grow_capacity();
     }
@@ -75,11 +71,11 @@ void dynamic_array::insert(int index, int value) {
     current_size++;
 }
 
-void dynamic_array::append(int value) {
+void DynamicArray::append(int value) {
     insert(current_size, value);
 }
 
-void dynamic_array::remove_index(int index) {
+void DynamicArray::remove_index(int index) {
     if (index >= current_size) {
         throw out_of_range("invalid index");
     }
@@ -91,17 +87,17 @@ void dynamic_array::remove_index(int index) {
     current_size--;
 }
 
-bool dynamic_array::remove_value(int value) {
-   int index = find(value);
-   if (index == -1) {
-       return false;
-   }
-
-   remove_index(index);
-   return true;
+bool DynamicArray::remove_value(int value) {
+    try {
+        int index = find(value);
+        remove_index(index);
+        return true;
+    } catch (domain_error) {
+        return false;
+    }
 }
 
-ostream& operator<<(ostream& out, dynamic_array& a) {
+ostream& operator<<(ostream& out, DynamicArray& a) {
     for (int i = 0; i < a.size(); i++) {
         out << a[i];
         if (i < a.size() - 1) {

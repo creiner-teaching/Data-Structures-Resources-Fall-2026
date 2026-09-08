@@ -4,7 +4,7 @@
 #include <stdexcept> 
 using namespace std;
 
-class student {
+class Student {
 // private members are only accessible within member functions
 private:
     string name;
@@ -15,7 +15,7 @@ private:
 // public members can be used in any code
 public:
     // constructor to create a new student object
-    student(string &student_name, int max_num_grades) {
+    Student(string &student_name, int max_num_grades) {
         name = student_name;
         num_grades = max_num_grades;
         grades = new float[num_grades];
@@ -23,7 +23,7 @@ public:
     }
 
     // destructor to clean up any memory allocated to this object
-    ~student() {
+    ~Student() {
         delete[] grades;
     }
 
@@ -54,7 +54,7 @@ public:
 };
 
 // operator overloading << to work with student objects
-ostream& operator<<(ostream& out, student& s) {
+ostream& operator<<(ostream& out, Student& s) {
     out << fixed << setprecision(2);
     out << s.get_name() << ": " << s.get_average();
     return out;
@@ -62,17 +62,19 @@ ostream& operator<<(ostream& out, student& s) {
 
 int main() {
     string name1 = "alice";
-    student s1(name1, 3);
+    Student s1(name1, 3);
+
     s1.add_grade(88.0);
     s1.add_grade(94.0);
     s1.add_grade(98.0);
     cout << s1 << endl;
 
     string name2 = "beth";
-    student *s2 = new student(name2, 2);
+    Student *s2 = new Student(name2, 2);
     // -> is used to dereference a pointer to an object
     // and access one of its members
-    s2->add_grade(94.5);
+    // s2->add_grade(94.5); // this is shorthand for dereferencing and then calling
+    (*s2).add_grade(94.5);
     s2->add_grade(86.2);
     cout << *s2 << endl;
     delete s2;

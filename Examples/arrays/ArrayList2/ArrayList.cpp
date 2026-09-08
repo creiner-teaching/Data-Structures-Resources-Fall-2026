@@ -1,9 +1,9 @@
 #include <iostream>
 #include <stdexcept>
-#include "safe_array.h"
+#include "ArrayList.h"
 using namespace std;
 
-safe_array::safe_array(int size) {
+ArrayList::ArrayList(int size) {
     if (size <= 0) {
         throw invalid_argument("size must be at least 1");
     }
@@ -13,30 +13,30 @@ safe_array::safe_array(int size) {
     current_size = 0;
 }
 
-safe_array::~safe_array() {
+ArrayList::~ArrayList() {
     delete[] data;
 }
 
-int safe_array::size() {
+int ArrayList::size() {
     return current_size;
 }
 
-int safe_array::cap() {
+int ArrayList::cap() {
     return capacity;
 }
 
-int& safe_array::at(int index) {
+int& ArrayList::at(int index) {
     if (index < 0 or index >= current_size) {
         throw out_of_range("invalid index");
     }
     return data[index];
 }
 
-int& safe_array::operator[](int index) {
+int& ArrayList::operator[](int index) {
     return at(index);
 }
 
-int safe_array::find(int value) {
+int ArrayList::find(int value) {
     for (int i = 0; i < current_size; i++) {
         if (data[i] == value) {
             return i;
@@ -45,7 +45,7 @@ int safe_array::find(int value) {
     return -1;
 }
 
-void safe_array::insert(int index, int value) {
+void ArrayList::insert(int index, int value) {
     if (current_size == capacity) {
         throw out_of_range("array is full");
     }
@@ -58,11 +58,11 @@ void safe_array::insert(int index, int value) {
     current_size++;
 }
 
-void safe_array::append(int value) {
+void ArrayList::append(int value) {
     insert(current_size, value);
 }
 
-void safe_array::remove_index(int index) {
+void ArrayList::remove_index(int index) {
     if (index >= current_size) {
         throw out_of_range("invalid index");
     }
@@ -74,7 +74,7 @@ void safe_array::remove_index(int index) {
     current_size--;
 }
 
-bool safe_array::remove_value(int value) {
+bool ArrayList::remove_value(int value) {
    int index = find(value);
    if (index == -1) {
        return false;
@@ -84,7 +84,7 @@ bool safe_array::remove_value(int value) {
    return true;
 }
 
-ostream& operator<<(ostream& out, safe_array& a) {
+ostream& operator<<(ostream& out, ArrayList& a) {
     for (int i = 0; i < a.size(); i++) {
         out << a[i];
         if (i < a.size() - 1) {

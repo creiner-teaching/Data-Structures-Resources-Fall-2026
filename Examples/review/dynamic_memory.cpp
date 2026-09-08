@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-int *fill_array(int size) {
+int* fill_array(int size) {
     int *a = new int[size];
     cout << "Enter " << size << " numbers:" << endl;
     for (int i = 0; i < size; i++) {
@@ -34,6 +34,8 @@ int main() {
     print_array(data, n);
 
     delete[] data;
+    data = nullptr; // the responsible final step 
+
     return 0;
 }
 

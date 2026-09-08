@@ -6,6 +6,7 @@ void a_function(int &ref_param, int val_param) {
     cout << "&val_param = " << &val_param << endl;
     cout << "&local_var = " << &local_var << endl;
     cout << "&ref_param = " << &ref_param << endl;
+    ref_param = 12;
 }
 
 int main() {
@@ -14,6 +15,7 @@ int main() {
     a_function(main_var1, main_var2);
     cout << "&main_var1 = " << &main_var1 << endl;
     cout << "&main_var2 = " << &main_var2 << endl;
+    cout << main_var1 << endl;
     return 0;
 }
 

@@ -2,14 +2,14 @@
 #include <stdexcept>
 using namespace std;
 
-class safe_array {
+class ArrayList {
 private:
     int *data;
     int capacity;
     int current_size;
 
 public:
-    safe_array(int size) {
+    ArrayList(int size) {
         if (size <= 0) {
             throw invalid_argument("size must be at least 1");
         }
@@ -19,7 +19,7 @@ public:
         current_size = 0;
     }
 
-    ~safe_array() {
+    ~ArrayList() {
         delete[] data;
     }
 
@@ -42,7 +42,7 @@ public:
         return at(index);
     }
 
-    void add(int value) {
+    void append(int value) {
         if (current_size == capacity) {
             throw out_of_range("array is full");
         }
@@ -51,7 +51,7 @@ public:
     }
 };
 
-ostream& operator<<(ostream& out, safe_array& a) {
+ostream& operator<<(ostream& out, ArrayList& a) {
     for (int i = 0; i < a.size(); i++) {
         out << a[i];
         if (i < a.size() - 1) {
@@ -62,7 +62,7 @@ ostream& operator<<(ostream& out, safe_array& a) {
 }
 
 int main() {
-    safe_array a(4);
+    ArrayList a(4);
     cout << "array: " << a << endl;
     a.add(7);
     a.add(-2);

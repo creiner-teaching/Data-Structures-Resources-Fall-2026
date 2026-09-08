@@ -1,10 +1,10 @@
 #include <iostream>
 #include <stdexcept>
-#include "safe_array.h"
+#include "ArrayList.h"
 using namespace std;
 
 int main() {
-    safe_array a(8);
+    ArrayList a(8);
     a.append(5);
     a.append(2);
     a.append(4);
