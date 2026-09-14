@@ -1,2 +1,10 @@
+# These are here to avoid uploading c++ binaries w/o extensions
+# Ignore everything
+*
+# Don't ignore directories
+!*/
+# Don't ignore files containing a dot
+!*.*
+
 *.o
 *.bin
