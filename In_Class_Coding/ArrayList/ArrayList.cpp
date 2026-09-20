@@ -61,13 +61,10 @@ void ArrayList::insert(int index, int value) {
     if (current_size == capacity) {
         grow_capacity();
     }
-    // SHOULD BE > CURRENT_SIZE (otherwise get an exception with insert(0, val))
-    if (index < 0 || index >= current_size) {
+    if (index < 0 || index > current_size) {
         throw out_of_range("list index out of range.");
     }
-    // move everything over one from end down to index
-    // SHOULD BE >=
-    for (int i = current_size-1; i > index; i--) {
+    for (int i = current_size-1; i >= index; i--) {
         elements[i+1] = elements[i];
     }
     // set the value at index
@@ -88,13 +85,7 @@ void ArrayList::remove_index(int index) {
     if (index < 0 || index >= current_size) {
         throw out_of_range("list index out of range.");
     }
-    // NOT NEEDED
-    if (index == current_size-1) {
-        current_size--;
-        return;
-    }
-    // SHOULD BE i < current_size - 1
-    for (int i = index; i < current_size; i++) {
+    for (int i = index; i < current_size-1; i++) {
         elements[i] = elements[i+1];
     }
     current_size--;

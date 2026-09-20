@@ -46,7 +46,7 @@ void DynamicArray::grow_capacity() {
     int *old = data;
 
     // allocate a new array that is twice as large
-    capacity *= 2;
+    capacity *= 2; // scaling factor
     data = new int[capacity];
         
     // copy all values over to the new array
@@ -72,7 +72,7 @@ void DynamicArray::insert(int index, int value) {
 }
 
 void DynamicArray::append(int value) {
-    insert(current_size, value);
+    insert(current_size, value); // NOTE: this is the best case of insert
 }
 
 void DynamicArray::remove_index(int index) {
@@ -98,12 +98,14 @@ bool DynamicArray::remove_value(int value) {
 }
 
 ostream& operator<<(ostream& out, DynamicArray& a) {
+    cout << "[";
     for (int i = 0; i < a.size(); i++) {
         out << a[i];
         if (i < a.size() - 1) {
             out << ",";
         }
     }
+    cout << "]";
     return out;
 }
 
