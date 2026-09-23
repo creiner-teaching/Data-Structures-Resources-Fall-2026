@@ -76,10 +76,10 @@ int& LinkedList::operator[](int index) {
 void LinkedList::remove_index(int index) {
     Node* left;
     Node* to_trash;
-if (length == 0) {
+    if (length == 0) {
         throw out_of_range("list index out of bounds");
     }
-if (index == 0) {
+    if (index == 0) {
         left = nullptr;
         to_trash = first;
     } else {

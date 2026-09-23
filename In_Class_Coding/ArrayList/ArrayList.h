@@ -1,31 +1,36 @@
-#include <iostream>
 #pragma once
+#include <iostream>
 
 using namespace std;
 
+template<typename T>
 class ArrayList {
 private:
-    int current_size;
+    T* data;
     int capacity;
-    int* elements; 
+    int current_size;
 
     void grow_capacity();
 
 public:
-    ArrayList(int desired_capacity = 10);
+    ArrayList(int size);
     ~ArrayList();
-    ArrayList(const ArrayList&) = delete;
-    ArrayList& operator=(const ArrayList&) = delete;
-    
-    int& at(int index);
-    int& operator[](int index);
+
     int size();
-    int cap();
-    void append(int value);
-    void insert(int index, int value);
-    int find(int value);
-    void remove_value(int value);
-    void remove_index(int index);
+
+    T& at(int index);
+    T& operator[](int index);
+    int find(T value); // finds the first index containing value
+
+    void insert(int index, T value);
+    void append(T value);
+
+    void remove_index(int index); 
+    bool remove_value(T value); // removes first instance of value
 };
 
-ostream& operator<<(ostream& out, ArrayList& list);
+template<typename T>
+ostream& operator<<(ostream& out, ArrayList<T>& a);
+
+
+#include "ArrayList.tpp"
