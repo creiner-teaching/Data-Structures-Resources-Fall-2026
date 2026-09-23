@@ -14,6 +14,13 @@ ArrayList<T>::ArrayList(int size) {
 }
 
 template<typename T>
+ArrayList<T>::ArrayList() {
+    capacity = 10;
+    data = new T[capacity];
+    current_size = 0;
+}
+
+template<typename T>
 ArrayList<T>::~ArrayList() {
     delete[] data;
 }
@@ -109,11 +116,13 @@ bool ArrayList<T>::remove_value(T value) {
 
 template<typename T>
 ostream& operator<<(ostream& out, ArrayList<T>& a) {
+    out << "[";
     for (int i = 0; i < a.size(); i++) {
         out << a[i];
         if (i < a.size() - 1) {
             out << ",";
         }
     }
+    out << "]";
     return out;
 }

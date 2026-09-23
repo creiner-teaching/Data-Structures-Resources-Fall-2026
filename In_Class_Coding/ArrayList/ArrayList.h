@@ -13,6 +13,7 @@ private:
     void grow_capacity();
 
 public:
+    ArrayList();
     ArrayList(int size);
     ~ArrayList();
 
@@ -31,6 +32,5 @@ public:
 
 template<typename T>
 ostream& operator<<(ostream& out, ArrayList<T>& a);
-
 
 #include "ArrayList.tpp"

@@ -5,15 +5,13 @@
 using namespace std;
 
 int main() {
-    ArrayList<int> my_list;
+    ArrayList<string> my_list;
     
-    my_list.append(1);
-    my_list.append(2);
-    my_list.append(3);
+    my_list.append("hello");
+    my_list.append("how");
+    my_list.append("are");
 
-    for (int val : my_list) {
-        cout << val << endl;
-    }
+    cout << my_list << endl;
 
     return 0;
 }
