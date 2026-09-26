@@ -5,13 +5,14 @@
 using namespace std;
 
 LinkedList::LinkedList() {
-    first = nullptr;
-    length = 0;
+    head = nullptr;
+    n = 0;
 }
 
 LinkedList::~LinkedList() {
-    Node* current = first;
-    while (current != nullptr) {
+    Node* current = head;
+
+    for (int i = 0; i < n; i++) {
         Node* next = current->next;
         delete current;
         current = next;
@@ -19,92 +20,115 @@ LinkedList::~LinkedList() {
 }
 
 int LinkedList::size() {
-    return length;
+    return n;
 }
 
 Node* LinkedList::get_node_at(int index) {
-    if (index > length - 1) {
+    if (index >= n || index < 0) {
         throw out_of_range("list index out of range");
     }
-    int current_index = 0;
-    Node* current_node = first;
-    while (current_index != index) {
+    Node* current_node = head;
+    for (int j = 0; j < index; j++) {
         current_node = current_node->next;
-        current_index++;
     }
     return current_node;
 }
 
-void LinkedList::prepend(int val) {
+void LinkedList::prepend(string val) {
     Node* new_node = new Node{val}; // Note: dynamic memory!
-    new_node->next = first;
-    first = new_node;
-    length++;
+    new_node->next = head;
+    head = new_node;
+    n++;
 }
 
-void LinkedList::insert(int index, int val) {
-    Node* pred;
-    if (index == 0 || length == 0) {
+void LinkedList::insert(int index, string val) {
+    if (index < 0 || index > n) {
+        throw out_of_range("list index out of range");
+    } 
+
+    if (index == 0) {
         prepend(val);
         return;
-    } else {
-        pred = get_node_at(index - 1);
     }
+
+    Node* pred = get_node_at(index - 1);
     Node* succ = pred->next;
     Node* new_node = new Node{val}; 
+
     pred->next = new_node;
     new_node->next = succ;
-    length++;
+    n++;
 }
 
-void LinkedList::append(int val) {
-    insert(length - 1, val);
-    // Note: If we were keeping track of a last node as well as a first,
+void LinkedList::append(string val) {
+    insert(n, val);
+    // Note: If we were keeping track of a tail node as well as a head,
     //   this would be as simple and efficient as prepend. You'll improve
-    //   this for homework.
+    //   this for homework, not by adding a tail but rather by making the list
+    //   circular, so that head.prev = tail
 }
 
-int& LinkedList::at(int index) {
-    int& val = get_node_at(index)->val;
+string& LinkedList::at(int index) {
+    string& val = get_node_at(index)->val;
     return val;
 }
 
-int& LinkedList::operator[](int index) {
+string& LinkedList::operator[](int index) {
     return at(index);
 }
 
-void LinkedList::remove_index(int index) {
-    Node* left;
-    Node* to_trash;
-    if (length == 0) {
-        throw out_of_range("list index out of bounds");
+Node* LinkedList::front() {
+    if (n == 0) {
+        throw out_of_range("list is empty.");
     }
-    if (index == 0) {
-        left = nullptr;
-        to_trash = first;
-    } else {
-        left = get_node_at(index - 1);
-        to_trash = left->next;
-    }
-    if (to_trash == nullptr) {
-        throw out_of_range("list index out of bounds");
-    }
-    Node* right = to_trash->next;
-    left->next = right;
-    delete to_trash;
-    length--;
+    return head;
 }
 
-int LinkedList::find(int value) {
-    for (int i = 0; i < length; i++) {
-        if (at(i) == value) {
+Node* LinkedList::back() {
+    if (n == 0) {
+        throw out_of_range("list is empty.");
+    }
+    return get_node_at(n-1);
+}
+
+void LinkedList::remove_index(int index) {
+    // three cases (each successive case assumes NOT former cases)
+    // one: invalid index, just throw exception
+    // two: index = 0. In this case, no left node to deal with, 
+    //      just reassign head to next and schedule deletion
+    // three: index != 0 AND index valid means left node guaranteed exists. 
+    //        in this case, our board algorithm works without a hitch.
+    if (index < 0 || index >= n) {
+        throw out_of_range("list index out of bounds");
+    }
+
+    Node* to_trash;
+    if (index == 0) {
+        to_trash = head;
+        head = head->next;
+    } else { // at this point, we know the following line won't fail
+        Node* left = get_node_at(index - 1);
+        to_trash = left->next;
+        left->next = to_trash->next;
+    }
+
+    delete to_trash;
+    n--;
+}
+
+int LinkedList::find(string value) {
+    Node* current = head;
+
+    for (int i = 0; i < n; i++) {
+        if (current->val == value) {
             return i;
         }
+        current = current->next;
     }
     throw domain_error("value not found in list");
 }
 
-void LinkedList::remove_value(int val) {
+void LinkedList::remove_value(string val) {
     int search_index = find(val);
     remove_index(search_index);
 }

@@ -5,14 +5,14 @@
 using namespace std;
 
 struct Node {
-    int val;
+    string val;
     Node* next = nullptr;
 };
 
 class LinkedList {
 private:
-    Node* first;
-    int length;
+    Node* head;
+    int n;
     Node* get_node_at(int index);
 
 public:
@@ -22,14 +22,16 @@ public:
     LinkedList& operator=(LinkedList& other) = delete;
     
     int size();
-    int& at(int index);
-    int& operator[](int index);
-    void prepend(int val);
-    void append(int val);
-    void insert(int index, int val);
-    int find(int val);
+    string& at(int index);
+    string& operator[](int index);
+    Node* front();
+    Node* back();
+    void prepend(string val);
+    void append(string val);
+    void insert(int index, string val);
+    int find(string val);
     void remove_index(int index);
-    void remove_value(int val);
+    void remove_value(string val);
 };
 
 ostream& operator<<(ostream& out, LinkedList& list);
